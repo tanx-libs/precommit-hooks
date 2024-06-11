@@ -1,7 +1,7 @@
--   id: private_key_check
-    name: detect private keys
-    description: Check for any private keys in staged files
-    entry: python pre_commit_hooks/private_key_check.py
-    language: python
-    types: [text]
-    stages: [commit]
+- id: private_key_check
+  name: detect private keys
+  description: Check for any private keys in staged files
+  entry: private_key_check
+  language: python
+  types: [python]
+  stages: [pre-commit]
