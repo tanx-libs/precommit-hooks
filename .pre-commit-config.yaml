@@ -1,0 +1,8 @@
+repos:
+  - repo: local
+    hooks:
+      - id: private-key-check
+        name: Check for any private keys in staged files
+        entry: python private_key_check.py
+        language: python
+        types: [python]
