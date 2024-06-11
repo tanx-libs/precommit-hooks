@@ -1,0 +1,5 @@
+repos:
+- repo: local
+  rev: v1.0.0  # use a ref >= 0.1.3
+  hooks:
+  - id: private_key_check
