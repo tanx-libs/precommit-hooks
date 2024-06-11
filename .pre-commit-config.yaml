@@ -1,9 +1,5 @@
 repos:
-  - repo: local
+  - repo: https://github.com/tanx-libs/precommit-hooks
     rev: v1.0.0
     hooks:
       - id: private-key-check
-        name: Check for any private keys in staged files
-        entry: python private_key_check.py
-        language: python
-        types: [python]
