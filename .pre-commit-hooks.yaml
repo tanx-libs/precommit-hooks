@@ -5,3 +5,4 @@
     language: python
     types: [text]
     stages: [commit]
+    files: .
