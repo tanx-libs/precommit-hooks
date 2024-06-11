@@ -1,5 +1,6 @@
 repos:
   - repo: local
+    rev: v1.0.0
     hooks:
       - id: private-key-check
         name: Check for any private keys in staged files
