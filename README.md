@@ -13,7 +13,7 @@ repos:
       - id: private_key_check # checkout all hooks under .pre-commit-hooks.yaml
 
 ```
-3. Run `pre-commit install` in th root directory
+3. Run `pre-commit install` in the root directory
 
 Now with every new commit, staged files would be checked <br>
 to run the hook throughout the exixting codebase, run `pre-commit run --all-files`
