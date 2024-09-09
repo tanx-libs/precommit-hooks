@@ -59,3 +59,4 @@ sudo apt install jq -y
 
 - Make sure you have `yamllint` installed in your virtual environment, by default the environment location is `.venv`.
 - If you have your virtual environment installed elsewhere then modify that location in pre-commit config file and run_yamllint.sh script.
+- yamllint requires `.yamllint.yaml` configuration file to run linterm you can find the reference for that in the repository.
