@@ -2,11 +2,11 @@ failure-threshold: error               # Ensure pipeline fails on critical issue
 format: tty                            # Human-readable terminal output
 ignored:
   - DL1001                             # Ignore: Allow inline ignore pragmas
-  - DL3057                             # Ignore: HEALTHCHECK instruction missing
 override:
   error:
     - DL3000                           # Error: Use absolute WORKDIR
     - DL3004                           # Error: Do not use sudo
+    - DL3002                           # Error: Last user should not be root
     - DL3011                           # Error: Valid UNIX ports range from 0 to 65535
     - DL3012                           # Error: Multiple HEALTHCHECK instructions
     - DL3020                           # Error: Use COPY instead of ADD for files and folders
@@ -19,8 +19,8 @@ override:
     - DL4000                           # Error: MAINTAINER is deprecated
     - DL4004                           # Error: Multiple ENTRYPOINT instructions found
   warning:
-    - DL3026                           # Error: Use only an allowed registry in the FROM image
-    - DL3002                           # Warning: Last user should not be root
+    - DL3026                           # Warning: Use only an allowed registry in the FROM image
+    - DL3057                           # Warning: HEALTHCHECK instruction missing
     - DL3003                           # Warning: Use WORKDIR to switch to a directory
     - DL3006                           # Warning: Always tag the version of an image explicitly
     - DL3007                           # Warning: Using latest is prone to errors
