@@ -1,0 +1,56 @@
+failure-threshold: error               # Ensure pipeline fails on critical issues
+format: tty                            # Human-readable terminal output
+ignored:
+  - DL1001                             # Ignore: Allow inline ignore pragmas
+  - DL3057                             # Ignore: HEALTHCHECK instruction missing
+override:
+  error:
+    - DL3000                           # Error: Use absolute WORKDIR
+    - DL3004                           # Error: Do not use sudo
+    - DL3011                           # Error: Valid UNIX ports range from 0 to 65535
+    - DL3012                           # Error: Multiple HEALTHCHECK instructions
+    - DL3020                           # Error: Use COPY instead of ADD for files and folders
+    - DL3021                           # Error: COPY with more than 2 arguments requires the last argument to end with /
+    - DL3023                           # Error: COPY --from cannot reference its own FROM alias
+    - DL3024                           # Error: FROM aliases must be unique
+    - DL3026                           # Error: Use only an allowed registry in the FROM image
+    - DL3043                           # Error: ONBUILD, FROM or MAINTAINER triggered from within ONBUILD instruction
+    - DL3044                           # Error: Do not refer to an environment variable within the same ENV statement
+    - DL3061                           # Error: Invalid instruction order. Dockerfile must begin with FROM, ARG, or comment
+    - DL4000                           # Error: MAINTAINER is deprecated
+    - DL4004                           # Error: Multiple ENTRYPOINT instructions found
+  warning:
+    - DL3002                           # Warning: Last user should not be root
+    - DL3003                           # Warning: Use WORKDIR to switch to a directory
+    - DL3006                           # Warning: Always tag the version of an image explicitly
+    - DL3007                           # Warning: Using latest is prone to errors
+    - DL3008                           # Warning: Pin versions in apt-get install
+    - DL3013                           # Warning: Pin versions in pip
+    - DL3016                           # Warning: Pin versions in npm
+    - DL3018                           # Warning: Pin versions in apk add
+    - DL3022                           # Warning: COPY --from should reference a previously defined FROM alias
+    - DL3025                           # Warning: Use arguments JSON notation for CMD and ENTRYPOINT arguments
+    - DL3027                           # Warning: Do not use apt; use apt-get or apt-cache instead
+    - DL3030                           # Warning: Use the -y switch to avoid manual input with yum install
+    - DL3045                           # Warning: COPY to a relative destination without WORKDIR set
+    - DL3046                           # Warning: useradd without flag -l and high UID will result in a large image
+    - DL4001                           # Warning: Either use Wget or Curl but not both
+    - DL4003                           # Warning: Multiple CMD instructions found
+    - DL4005                           # Warning: Use SHELL to change the default shell
+    - DL4006                           # Warning: Set the SHELL option -o pipefail before RUN with a pipe in it
+  info:
+    - DL3001                           # Info: Avoid using bash commands like ssh, vim, etc., in Docker
+    - DL3009                           # Info: Delete apt-get lists after installing something
+    - DL3010                           # Info: Use ADD for extracting archives into an image
+    - DL3015                           # Info: Avoid additional packages by specifying --no-install-recommends
+    - DL3019                           # Info: Use --no-cache switch to avoid the need to use --update and remove cache
+    - DL3049                           # Info: Label <label> is missing
+    - DL3050                           # Info: Superfluous label(s) present
+    - DL3059                           # Info: Multiple consecutive RUN instructions. Consider consolidation.
+    - DL3060                           # Info: yarn cache clean missing after yarn install
+  style:
+    - DL3048                           # Style: Invalid Label Key
+strict-labels: true                    # Ensure all required labels are present
+disable-ignore-pragma: false           # Allow ignoring rules with pragmas in Dockerfile
+trustedRegistries:
+  - "docker.io"                        # Trusted registry
