@@ -13,13 +13,13 @@ override:
     - DL3021                           # Error: COPY with more than 2 arguments requires the last argument to end with /
     - DL3023                           # Error: COPY --from cannot reference its own FROM alias
     - DL3024                           # Error: FROM aliases must be unique
-    - DL3026                           # Error: Use only an allowed registry in the FROM image
     - DL3043                           # Error: ONBUILD, FROM or MAINTAINER triggered from within ONBUILD instruction
     - DL3044                           # Error: Do not refer to an environment variable within the same ENV statement
     - DL3061                           # Error: Invalid instruction order. Dockerfile must begin with FROM, ARG, or comment
     - DL4000                           # Error: MAINTAINER is deprecated
     - DL4004                           # Error: Multiple ENTRYPOINT instructions found
   warning:
+    - DL3026                           # Error: Use only an allowed registry in the FROM image
     - DL3002                           # Warning: Last user should not be root
     - DL3003                           # Warning: Use WORKDIR to switch to a directory
     - DL3006                           # Warning: Always tag the version of an image explicitly
