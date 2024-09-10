@@ -9,7 +9,7 @@ yamllint_config_file=".yamllint.yaml"
 
 # Check if no YAML files are found
 if [[ -z "$yaml_files" ]]; then
-    echo "No YAML files found in staged changes."
+    # echo "No YAML files found in staged changes."
     exit 0
 fi
 
