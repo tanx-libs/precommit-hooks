@@ -37,4 +37,4 @@ for file in $yaml_files; do
     fi
 done
 
-echo "All YAML files passed Yamllint"
+# echo "All YAML files passed Yamllint"

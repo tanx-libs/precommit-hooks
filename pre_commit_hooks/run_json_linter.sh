@@ -5,7 +5,7 @@ json_files=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.json')
 
 # Check if no JSON files are found
 if [[ -z "$json_files" ]]; then
-    echo "No JSON files found in staged changes."
+    # echo "No JSON files found in staged changes."
     exit 0
 fi
 
@@ -27,4 +27,4 @@ for file in $json_files; do
     fi
 done
 
-echo "All JSON files passed linting"
+# echo "All JSON files passed linting"

@@ -5,7 +5,7 @@ dockerfiles=$(git diff --cached --name-only --diff-filter=ACM | grep -E 'Dockerf
 
 # Check if no Dockerfiles are found
 if [[ -z "$dockerfiles" ]]; then
-    echo "No Dockerfiles found in staged changes."
+    # echo "No Dockerfiles found in staged changes."
     exit 0
 fi
 
@@ -32,4 +32,4 @@ for file in $dockerfiles; do
     fi
 done
 
-echo "All Dockerfiles passed Hadolint"
+# echo "All Dockerfiles passed Hadolint"

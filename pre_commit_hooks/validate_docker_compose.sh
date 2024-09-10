@@ -5,7 +5,7 @@ compose_files=$(git diff --cached --name-only --diff-filter=ACM | grep -E 'docke
 
 # Check if no docker-compose files are found
 if [[ -z "$compose_files" ]]; then
-    echo "No docker-compose.yml files found in staged changes."
+    # echo "No docker-compose.yml files found in staged changes."
     exit 0
 fi
 
@@ -26,4 +26,4 @@ for file in $compose_files; do
     fi
 done
 
-echo "All docker-compose.yml files passed validation"
+# echo "All docker-compose.yml files passed validation"
