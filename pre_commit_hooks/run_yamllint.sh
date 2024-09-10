@@ -5,7 +5,7 @@ yaml_files=$(git diff --cached --name-only --diff-filter=ACM | grep -E '.*\.ya?m
 
 yamllint_path=$(which yamllint)
 
-yamllint_config_file=".yamllint.yaml"
+yamllint_config_file="./pre_commit_hooks/config/.yamllint.yaml"
 
 # Check if no YAML files are found
 if [[ -z "$yaml_files" ]]; then

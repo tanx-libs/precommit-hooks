@@ -25,7 +25,7 @@ fi
 # Loop through all staged Dockerfiles and run Hadolint on them
 for file in $dockerfiles; do
     # Run Hadolint using the Docker container
-    docker run --rm -i -v ./.hadolint.yaml:/.config/hadolint.yaml hadolint/hadolint < "$file"
+    docker run --rm -i -v ./config/.hadolint.yaml:/.config/hadolint.yaml hadolint/hadolint < "$file"
     if [ $? -ne 0 ]; then
         echo "Hadolint failed on $file"
         exit 1
