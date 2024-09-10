@@ -41,6 +41,7 @@ PRIVATE_ADDRESS="1a4b0778f...e99fc33fff87c821829" # noqa:keycheck
 
 script - `pre_commit_hooks/private_key_check.py`
 
+
 ### Docker Compose Validator
 
 - Validates all staged docker compose files.
@@ -49,7 +50,7 @@ script - `pre_commit_hooks/private_key_check.py`
 
 - Runs linter for staged Dockerfile's
 - Use the given production hadolint config file `.hadolint.yaml`.
-- Use the following script to run `dockerfile` linting for the staged files, also make sure that name of this script is `./scripts/run_hadolint.sh` , because that is what we have used in the .`pre-commit-config.yaml`
+- Use the following script to run `dockerfile` linting for the staged files, also make sure that name of this script is `./run_hadolint.sh` , because that is what we have used in the .`pre-commit-config.yaml`
 
 ### Json Lint
 
