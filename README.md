@@ -21,10 +21,12 @@ repos:
 
 ```
 
-3. Run `pre-commit install` in the root directory
+3. Replicate the `pre_commit_hooks` directory in your codebase.
+
+4. Run `pre-commit install` in the root directory 
 
 Now with every new commit, staged files would be checked `<br>`
-to run the hook throughout the exixting codebase, run `pre-commit run --all-files`
+to run the hook throughout the exixting codebase, run `pre-commit run --all-files` to check manually.
 
 ## Hooks available
 
@@ -46,11 +48,15 @@ script - `pre_commit_hooks/private_key_check.py`
 
 - Validates all staged docker compose files.
 
+script - `pre_commit_hooks/validate_docker_compose.sh`
+
 ### Hadolint - Dockerfile lint
 
 - Runs linter for staged Dockerfile's
 - Use the given production hadolint config file `.hadolint.yaml`.
 - Use the following script to run `dockerfile` linting for the staged files, also make sure that name of this script is `./run_hadolint.sh` , because that is what we have used in the .`pre-commit-config.yaml`
+
+script - `pre_commit_hooks/run_hadolint.sh`
 
 ### Json Lint
 
@@ -60,8 +66,12 @@ script - `pre_commit_hooks/private_key_check.py`
 sudo apt install jq -y
 ```
 
+script - `pre_commit_hooks/run_json_linter.sh`
+
 ### Yaml Lint
 
 - Make sure you have `yamllint` installed in your virtual environment, by default the environment location is `.venv`.
 - If you have your virtual environment installed elsewhere then modify that location in pre-commit config file and run_yamllint.sh script.
 - yamllint requires `.yamllint.yaml` configuration file to run linterm you can find the reference for that in the repository.
+
+script - `pre_commit_hooks/run_yamllint.sh`
