@@ -11,7 +11,6 @@ See also: https://github.com/pre-commit/pre-commit
 ```python
 repos:
   - repo: https://github.com/tanx-libs/precommit-hooks
-    rev: v1.0.1  # Please check the latest release, under releases
     hooks:
       - id: private_key_check # Checks for private keys
       - id: docker-compose-validate # Docker compose file validator
