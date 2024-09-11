@@ -20,9 +20,7 @@ repos:
 
 ```
 
-3. Replicate the `pre_commit_hooks` directory in your codebase.
-
-4. Run `pre-commit install` in the root directory 
+3. Run `pre-commit install` in the root directory 
 
 Now with every new commit, staged files would be checked `<br>`
 to run the hook throughout the existing codebase, run `pre-commit run --all-files` to check manually.
@@ -45,32 +43,30 @@ script - `pre_commit_hooks/private_key_check.py`
 
 ### Docker Compose Validator - `id: docker-compose-validate`
 
-- Validates all staged docker compose files.
+- Validates all staged docker compose files using either `docker compose` or `docker-compose`. 
 
-script - `pre_commit_hooks/validate_docker_compose.sh`
+script - `pre_commit_hooks/run_validate_docker_compose.py`
 
 ### Hadolint - Dockerfile lint - `id: hadolint-dockerfile-lint`
 
+- Hadolint lints all staged dockerfile, for reference `pre_commit_hooks/config/.hadolint.yaml` consists of all the warning / error codes wit h description.
 - Runs linter for staged Dockerfile's
-- Use the given production hadolint config file `.hadolint.yaml`.
-- Use the following script to run `dockerfile` linting for the staged files, also make sure that name of this script is `./run_hadolint.sh` , because that is what we have used in the .`pre-commit-config.yaml`
 
-script - `pre_commit_hooks/run_hadolint.sh`
+script - `pre_commit_hooks/run_hadolint.py`
 
 ### Json Lint - `id: json-lint`
 
-- Make sure you have jq installed on your system, if not then install it using 
+- Json Lint lints all staged json files using `jq`.
+- Make sure you have jq installed on your system, if not then install it using
 
 ```bash
 sudo apt install jq -y
 ```
 
-script - `pre_commit_hooks/run_json_linter.sh`
+script - `pre_commit_hooks/run_json_linter.py`
 
 ### Yaml Lint - `id: yamllint`
 
-- Make sure you have `yamllint` installed in your virtual environment, by default the environment location is `.venv`.
-- If you have your virtual environment installed elsewhere then modify that location in pre-commit config file and run_yamllint.sh script.
-- yamllint requires `.yamllint.yaml` configuration file to run linterm you can find the reference for that in the repository.
+- yamllint lints all the staged files 
 
-script - `pre_commit_hooks/run_yamllint.sh`
+script - `pre_commit_hooks/run_yamllint.py`
