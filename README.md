@@ -14,10 +14,10 @@ repos:
     rev: v1.0.1  # please check the latest release, under releases
     hooks:
       - id: private_key_check # checkout all hooks under .pre-commit-hooks.yaml
-      - id: docker-compose-validate
-      - id: hadolint-dockerfile-lint
-      - id: json-lint
-      - id: yamllint
+      - id: docker-compose-validate # Docker compose file validagtor
+      - id: hadolint-dockerfile-lint # Dockerfile lint 
+      - id: json-lint # Json file lint
+      - id: yamllint # Yaml file lint
 
 ```
 
