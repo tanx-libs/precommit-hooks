@@ -9,31 +9,42 @@
 
 -   id: docker-compose-validate
     name: Docker Compose Config Validation
-    entry: ./pre_commit_hooks/validate_docker_compose.sh
-    language: system
+    description: Validate the docker-compose.yml file
+    entry: docker_compose_validate
+    language: python
     pass_filenames: false
     verbose: true
     stages: [pre-commit]
+    types: [file]
+    
 
 -   id: hadolint-dockerfile-lint
     name: Hadolint Dockerfile Lint
-    entry: ./pre_commit_hooks/run_hadolint.sh
-    language: system
+    description: Lint Dockerfiles using Hadolint
+    entry: dockerfile_lint
+    language: python
     pass_filenames: false
     verbose: true
     stages: [pre-commit]
+    files: Dockerfile$
+    types: [file]
 
 -   id: json-lint
     name: JSON Lint
-    entry: ./pre_commit_hooks/run_json_linter.sh
-    language: system
+    description: Lint JSON files
+    entry: json_lint
+    language: python
     pass_filenames: false
     verbose: true
     stages: [pre-commit]
+    files: \.json$
+    types: [file]
 
 -   id: yamllint
     name: Yaml Lint
-    entry: ./pre_commit_hooks/run_yamllint.sh
-    language: system
-    pass_filenames: false
+    description: Lint YAML files
+    entry: yamllint
+    language: python
+    files: \.ya?ml$  # This regex matches both .yaml and .yml files
+    types: [file]
     stages: [pre-commit]
