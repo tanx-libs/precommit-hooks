@@ -15,6 +15,8 @@
     pass_filenames: false
     verbose: true
     stages: [pre-commit]
+    types: [file]
+    
 
 -   id: hadolint-dockerfile-lint
     name: Hadolint Dockerfile Lint
@@ -24,6 +26,8 @@
     pass_filenames: false
     verbose: true
     stages: [pre-commit]
+    files: Dockerfile$
+    types: [file]
 
 -   id: json-lint
     name: JSON Lint
@@ -33,11 +37,14 @@
     pass_filenames: false
     verbose: true
     stages: [pre-commit]
+    files: \.json$
+    types: [file]
 
 -   id: yamllint
     name: Yaml Lint
     description: Lint YAML files
     entry: yamllint
     language: python
-    pass_filenames: false
+    files: \.ya?ml$  # This regex matches both .yaml and .yml files
+    types: [file]
     stages: [pre-commit]
