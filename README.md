@@ -14,13 +14,19 @@ repos:
     rev: v1.0.1  # please check the latest release, under releases
     hooks:
       - id: private_key_check # checkout all hooks under .pre-commit-hooks.yaml
+      - id: docker-compose-validate # Docker compose file validagtor
+      - id: hadolint-dockerfile-lint # Dockerfile lint 
+      - id: json-lint # Json file lint
+      - id: yamllint # Yaml file lint
 
 ```
 
-3. Run `pre-commit install` in the root directory
+3. Replicate the `pre_commit_hooks` directory in your codebase.
+
+4. Run `pre-commit install` in the root directory 
 
 Now with every new commit, staged files would be checked `<br>`
-to run the hook throughout the exixting codebase, run `pre-commit run --all-files`
+to run the hook throughout the exixting codebase, run `pre-commit run --all-files` to check manually.
 
 ## Hooks available
 
@@ -37,17 +43,22 @@ PRIVATE_ADDRESS="1a4b0778f...e99fc33fff87c821829" # noqa:keycheck
 
 script - `pre_commit_hooks/private_key_check.py`
 
-### Docker Compose Validator
+
+### Docker Compose Validator - `id: docker-compose-validate`
 
 - Validates all staged docker compose files.
 
-### Hadolint - Dockerfile lint
+script - `pre_commit_hooks/validate_docker_compose.sh`
+
+### Hadolint - Dockerfile lint - `id: hadolint-dockerfile-lint`
 
 - Runs linter for staged Dockerfile's
 - Use the given production hadolint config file `.hadolint.yaml`.
-- Use the following script to run `dockerfile` linting for the staged files, also make sure that name of this script is `./scripts/run_hadolint.sh` , because that is what we have used in the .`pre-commit-config.yaml`
+- Use the following script to run `dockerfile` linting for the staged files, also make sure that name of this script is `./run_hadolint.sh` , because that is what we have used in the .`pre-commit-config.yaml`
 
-### Json Lint
+script - `pre_commit_hooks/run_hadolint.sh`
+
+### Json Lint - `id: json-lint`
 
 - Make sure you have jq installed on your system, if not then install it using 
 
@@ -55,8 +66,12 @@ script - `pre_commit_hooks/private_key_check.py`
 sudo apt install jq -y
 ```
 
-### Yaml Lint
+script - `pre_commit_hooks/run_json_linter.sh`
+
+### Yaml Lint - `id: yamllint`
 
 - Make sure you have `yamllint` installed in your virtual environment, by default the environment location is `.venv`.
 - If you have your virtual environment installed elsewhere then modify that location in pre-commit config file and run_yamllint.sh script.
 - yamllint requires `.yamllint.yaml` configuration file to run linterm you can find the reference for that in the repository.
+
+script - `pre_commit_hooks/run_yamllint.sh`
