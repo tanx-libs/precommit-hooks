@@ -11,10 +11,9 @@ See also: https://github.com/pre-commit/pre-commit
 ```python
 repos:
   - repo: https://github.com/tanx-libs/precommit-hooks
-    rev: v1.1.1  # please check the latest release, under releases
     hooks:
-      - id: private_key_check # checkout all hooks under .pre-commit-hooks.yaml
-      - id: docker-compose-validate # Docker compose file validagtor
+      - id: private_key_check # Checks for private keys
+      - id: docker-compose-validate # Docker compose file validator
       - id: hadolint-dockerfile-lint # Dockerfile lint 
       - id: json-lint # Json file lint
       - id: yamllint # Yaml file lint
@@ -26,7 +25,7 @@ repos:
 4. Run `pre-commit install` in the root directory 
 
 Now with every new commit, staged files would be checked `<br>`
-to run the hook throughout the exixting codebase, run `pre-commit run --all-files` to check manually.
+to run the hook throughout the existing codebase, run `pre-commit run --all-files` to check manually.
 
 ## Hooks available
 
