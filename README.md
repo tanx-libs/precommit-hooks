@@ -44,13 +44,13 @@ PRIVATE_ADDRESS="1a4b0778f...e99fc33fff87c821829" # noqa:keycheck
 script - `pre_commit_hooks/private_key_check.py`
 
 
-### Docker Compose Validator
+### Docker Compose Validator - `id: docker-compose-validate`
 
 - Validates all staged docker compose files.
 
 script - `pre_commit_hooks/validate_docker_compose.sh`
 
-### Hadolint - Dockerfile lint
+### Hadolint - Dockerfile lint - `id: hadolint-dockerfile-lint`
 
 - Runs linter for staged Dockerfile's
 - Use the given production hadolint config file `.hadolint.yaml`.
@@ -58,7 +58,7 @@ script - `pre_commit_hooks/validate_docker_compose.sh`
 
 script - `pre_commit_hooks/run_hadolint.sh`
 
-### Json Lint
+### Json Lint - `id: json-lint`
 
 - Make sure you have jq installed on your system, if not then install it using 
 
@@ -68,7 +68,7 @@ sudo apt install jq -y
 
 script - `pre_commit_hooks/run_json_linter.sh`
 
-### Yaml Lint
+### Yaml Lint - `id: yamllint`
 
 - Make sure you have `yamllint` installed in your virtual environment, by default the environment location is `.venv`.
 - If you have your virtual environment installed elsewhere then modify that location in pre-commit config file and run_yamllint.sh script.
