@@ -19,7 +19,7 @@
 -   id: hadolint-dockerfile-lint
     name: Hadolint Dockerfile Lint
     description: Lint Dockerfiles using Hadolint
-    entry: hadolint_dockerfile_lint
+    entry: dockerfile_lint
     language: python
     pass_filenames: false
     verbose: true
