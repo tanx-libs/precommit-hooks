@@ -15,8 +15,9 @@ def get_staged_yaml_files():
             text=True,
             check=True
         )
-        # Filter for YAML files (both .yaml and .yml)
-        yaml_files = [file for file in result.stdout.splitlines() if file.endswith(('.yml', '.yaml'))]
+        # Filter for YAML files (both .yaml and .yml) and create absolute paths
+        # yaml_files = [file for file in result.stdout.splitlines() if file.endswith(('.yml', '.yaml'))]
+        yaml_files = [os.path.abspath(file) for file in result.stdout.splitlines() if file.endswith(('.yml', '.yaml'))]
         return yaml_files
     except subprocess.CalledProcessError as e:
         print(f"Error finding staged files: {e.stderr}")
