@@ -46,7 +46,7 @@ def lint_yaml_file(yaml_file, yamllint_path):
     # Lint the YAML file using yamllint with the provided config
     try:
         result = subprocess.run(
-            [yamllint_path, '-c', YAMLLINT_CONFIG_FILE, yaml_file],
+            [yamllint_path, '-c', YAMLLINT_CONFIG_FILE, yaml_file],  # Include yaml_file at the end
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True
