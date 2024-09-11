@@ -26,7 +26,7 @@ repos:
 4. Run `pre-commit install` in the root directory 
 
 Now with every new commit, staged files would be checked `<br>`
-to run the hook throughout the exixting codebase, run `pre-commit run --all-files` to check manually.
+to run the hook throughout the existing codebase, run `pre-commit run --all-files` to check manually.
 
 ## Hooks available
 
