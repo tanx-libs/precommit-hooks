@@ -9,31 +9,35 @@
 
 -   id: docker-compose-validate
     name: Docker Compose Config Validation
-    entry: ./pre_commit_hooks/validate_docker_compose.sh
-    language: system
+    description: Validate the docker-compose.yml file
+    entry: docker_compose_validate
+    language: python
     pass_filenames: false
     verbose: true
     stages: [pre-commit]
 
 -   id: hadolint-dockerfile-lint
     name: Hadolint Dockerfile Lint
-    entry: ./pre_commit_hooks/run_hadolint.sh
-    language: system
+    description: Lint Dockerfiles using Hadolint
+    entry: hadolint_dockerfile_lint
+    language: python
     pass_filenames: false
     verbose: true
     stages: [pre-commit]
 
 -   id: json-lint
     name: JSON Lint
-    entry: ./pre_commit_hooks/run_json_linter.sh
-    language: system
+    description: Lint JSON files
+    entry: json_lint
+    language: python
     pass_filenames: false
     verbose: true
     stages: [pre-commit]
 
 -   id: yamllint
     name: Yaml Lint
-    entry: ./pre_commit_hooks/run_yamllint.sh
-    language: system
+    description: Lint YAML files
+    entry: yamllint
+    language: python
     pass_filenames: false
     stages: [pre-commit]
