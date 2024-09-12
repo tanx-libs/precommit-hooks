@@ -84,19 +84,19 @@ def lint_yaml_file(yaml_file, yamllint_path):
 
     # Lint the YAML file using yamllint with the provided config
     try:
-        preprocessed_yaml_content = preprocess_yaml_file(yaml_file)
+        # preprocessed_yaml_content = preprocess_yaml_file(yaml_file)
 
-        temp_yaml_file = yaml_file + ".tmp"
+        # temp_yaml_file = yaml_file + ".tmp"
 
-        with open(temp_yaml_file, "w") as temp_file:
-            temp_file.write(preprocessed_yaml_content)
+        # with open(temp_yaml_file, "w") as temp_file:
+        #     temp_file.write(preprocessed_yaml_content)
 
         result = subprocess.run(
             [
                 yamllint_path,
                 "-c",
                 YAMLLINT_CONFIG_FILE,
-                temp_yaml_file,
+                yaml_file,
             ],  # Include yaml_file at the end
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
@@ -112,11 +112,12 @@ def lint_yaml_file(yaml_file, yamllint_path):
         print(f"Error running yamllint on {yaml_file}: {e.stderr}")
         sys.exit(1)
     finally:
+        pass
         # Remove the temporary file after linting
-        try:
-            os.remove(temp_yaml_file)
-        except OSError as e:
-            print(f"Error removing temporary file {temp_yaml_file}: {e}")
+        # try:
+        #     os.remove(temp_yaml_file)
+        # except OSError as e:
+        #     print(f"Error removing temporary file {temp_yaml_file}: {e}")
 
 
 def main():
