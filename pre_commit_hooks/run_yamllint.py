@@ -6,6 +6,20 @@ import sys
 YAMLLINT_CONFIG_FILE = "./pre_commit_hooks/config/.yamllint.yaml"
 
 
+def should_skip_yaml_file(yaml_file):
+    """
+    Check if the file contains '# yamllint disable-file' at the top of the file.
+    If so, skip the file.
+    """
+    try:
+        with open(yaml_file, "r") as file:
+            first_line = file.readline().strip()
+            return first_line == "# yamllint disable-file"
+    except IOError as e:
+        print(f"Error reading {yaml_file}: {e}")
+        return False
+
+
 def get_staged_yaml_files():
     # Get the list of staged files using git
     try:
@@ -17,6 +31,7 @@ def get_staged_yaml_files():
             check=True,
         )
         # Filter for YAML files (both .yaml and .yml) and create absolute paths
+        # yaml_files = [file for file in result.stdout.splitlines() if file.endswith(('.yml', '.yaml'))]
         yaml_files = [
             os.path.abspath(file)
             for file in result.stdout.splitlines()
@@ -29,9 +44,6 @@ def get_staged_yaml_files():
 
 
 def preprocess_yaml_file(yaml_file):
-    """
-    Preprocess the YAML file content by removing lines containing # yamllint disable-line.
-    """
     processed_lines = []
     try:
         with open(yaml_file, "r") as file:
@@ -65,30 +77,46 @@ def check_yamllint_config_exists():
 
 
 def lint_yaml_file(yaml_file, yamllint_path):
-    """
-    Lint the preprocessed YAML content using yamllint, piping the content via stdin.
-    """
+    # Check if the file should be skipped due to 'yamllint disable-file'
+    if should_skip_yaml_file(yaml_file):
+        print(f"Skipping {yaml_file} due to '# yamllint disable-file' directive.")
+        return
+
+    # Lint the YAML file using yamllint with the provided config
     try:
-        # Preprocess the YAML content by removing lines with # yamllint disable-line
         preprocessed_yaml_content = preprocess_yaml_file(yaml_file)
 
-        # Run yamllint and pipe the preprocessed content to stdin
+        temp_yaml_file = yaml_file + ".tmp"
+
+        with open(temp_yaml_file, "w") as temp_file:
+            temp_file.write(preprocessed_yaml_content)
+
         result = subprocess.run(
-            [yamllint_path, "-c", YAMLLINT_CONFIG_FILE, "-"],  # `-` makes yamllint read from stdin
-            input=preprocessed_yaml_content,  # Pass the preprocessed content as input
+            [
+                yamllint_path,
+                "-c",
+                YAMLLINT_CONFIG_FILE,
+                temp_yaml_file,
+            ],  # Include yaml_file at the end
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,
         )
-
         if result.returncode != 0:
             print(f"Yamllint failed on {yaml_file}")
             print(result.stdout)
             sys.exit(1)
+        
 
     except subprocess.CalledProcessError as e:
         print(f"Error running yamllint on {yaml_file}: {e.stderr}")
         sys.exit(1)
+    finally:
+        # Remove the temporary file after linting
+        try:
+            os.remove(temp_yaml_file)
+        except OSError as e:
+            print(f"Error removing temporary file {temp_yaml_file}: {e}")
 
 
 def main():
