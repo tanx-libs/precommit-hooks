@@ -6,20 +6,6 @@ import sys
 YAMLLINT_CONFIG_FILE = "./pre_commit_hooks/config/.yamllint.yaml"
 
 
-def should_skip_yaml_file(yaml_file):
-    """
-    Check if the file contains '# yamllint disable-file' at the top of the file.
-    If so, skip the file.
-    """
-    try:
-        with open(yaml_file, "r") as file:
-            first_line = file.readline().strip()
-            return first_line == "# yamllint disable-file"
-    except IOError as e:
-        print(f"Error reading {yaml_file}: {e}")
-        return False
-
-
 def get_staged_yaml_files():
     # Get the list of staged files using git
     try:
@@ -77,26 +63,21 @@ def check_yamllint_config_exists():
 
 
 def lint_yaml_file(yaml_file, yamllint_path):
-    # Check if the file should be skipped due to 'yamllint disable-file'
-    if should_skip_yaml_file(yaml_file):
-        print(f"Skipping {yaml_file} due to '# yamllint disable-file' directive.")
-        return
-
     # Lint the YAML file using yamllint with the provided config
     try:
-        # preprocessed_yaml_content = preprocess_yaml_file(yaml_file)
+        preprocessed_yaml_content = preprocess_yaml_file(yaml_file)
 
-        # temp_yaml_file = yaml_file + ".tmp"
+        temp_yaml_file = yaml_file + ".tmp"
 
-        # with open(temp_yaml_file, "w") as temp_file:
-        #     temp_file.write(preprocessed_yaml_content)
+        with open(temp_yaml_file, "w") as temp_file:
+            temp_file.write(preprocessed_yaml_content)
 
         result = subprocess.run(
             [
                 yamllint_path,
                 "-c",
                 YAMLLINT_CONFIG_FILE,
-                yaml_file,
+                temp_yaml_file,
             ],  # Include yaml_file at the end
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
@@ -112,12 +93,11 @@ def lint_yaml_file(yaml_file, yamllint_path):
         print(f"Error running yamllint on {yaml_file}: {e.stderr}")
         sys.exit(1)
     finally:
-        pass
         # Remove the temporary file after linting
-        # try:
-        #     os.remove(temp_yaml_file)
-        # except OSError as e:
-        #     print(f"Error removing temporary file {temp_yaml_file}: {e}")
+        try:
+            os.remove(temp_yaml_file)
+        except OSError as e:
+            print(f"Error removing temporary file {temp_yaml_file}: {e}")
 
 
 def main():
