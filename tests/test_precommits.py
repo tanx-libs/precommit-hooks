@@ -24,6 +24,7 @@ class TestPreCommitCheck:
         "0xc12e72dacf06749d6b1ebaaac7eb8bc50af0844b87595ce0491b98dc3d51a6"# noqa:keycheck
         "0xc12e72dacf06749d6b1ebaaac7eb8bc50af0844b87595ce0491b98dc3d51a6",  #    noqa:keycheck
         "0xc12e72dacf06749d6b1ebaaac7eb8bc50af0844b87595ce0491b98dc3d51a6"; #noqa:keycheck
+        "0xc12e72dacf06749d6b1ebaaac7eb8bc50af0844b87595ce0491b98dc3d51a6"; // noqa:keycheck
         """
 
         with patch('builtins.open', mock_open(read_data=mock_content)) as mock_file:

@@ -2,7 +2,7 @@ import re
 import sys
 from typing import Optional
 
-REGEX_PATTERN = r'(?i)(?:"|\')?(?:0x|[0-9a-f]{2})(?:[a-f0-9]{64}|[a-f0-9]{62})(?:"|\')?(?:[,])?(?! *# *noqa:keycheck|.*#.*noqa:keycheck)'
+REGEX_PATTERN = r'(?i)(?:"|\')?(?:0x|[0-9a-f]{2})(?:[a-f0-9]{64}|[a-f0-9]{62})(?:"|\')?(?:[,])?(?! *[#\/\/] *noqa:keycheck|.*[#\/\/].*noqa:keycheck)'
 
 def check_regex_match(filename: str, regex: str = REGEX_PATTERN) -> Optional[str]:
     matches =[]
