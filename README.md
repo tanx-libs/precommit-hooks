@@ -33,9 +33,14 @@ to run the hook throughout the existing codebase, run `pre-commit run --all-file
 - detects private keys of length `[64,66]`
 - private keys can also begin with `0x`,`<br>`
 - to skip the checks for a line, use ` # noqa:keycheck`
+- Check if the file starts with "# noqa:keycheck-file" or "// noqa:keycheck-file"
 
 ```python
 PRIVATE_ADDRESS="1a4b0778f...e99fc33fff87c821829" # noqa:keycheck
+```
+
+```js
+PRIVATE_ADDRESS="1a4b0778f...e99fc33fff87c821829" // noqa:keycheck
 ```
 
 script - `pre_commit_hooks/private_key_check.py`
@@ -70,3 +75,15 @@ script - `pre_commit_hooks/run_json_linter.py`
 - yamllint lints all the staged files 
 
 script - `pre_commit_hooks/run_yamllint.py`
+
+- If you are using any kind of templating like this, especially for docker make sure it is in a string format.
+
+- Incorrect Format
+```yaml
+image: {IMAGE-1-NAME}:{IMAGE-1-TAG}
+```
+
+- Correct Format
+```yaml
+image: "{IMAGE-1-NAME}:{IMAGE-1-TAG}"
+```
