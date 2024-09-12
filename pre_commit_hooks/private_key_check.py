@@ -8,6 +8,11 @@ def check_regex_match(filename: str, regex: str = REGEX_PATTERN) -> Optional[str
     matches =[]
     with open(filename, 'r') as f:
         content = f.read()
+
+    # Check if the file starts with "# noqa:keycheck-file" or "// noqa:keycheck-file"
+    if content.startswith("# noqa:keycheck-file") or content.startswith("// noqa:keycheck-file"):
+        return None
+    
     match = re.findall(regex, content)
     if match:
         for i in match:
