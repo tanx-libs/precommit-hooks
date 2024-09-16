@@ -5,7 +5,7 @@ import sys
 import yaml
 import os
 import re
-
+import tempfile
 
 def get_git_root():
     try:
@@ -16,7 +16,6 @@ def get_git_root():
     except subprocess.CalledProcessError:
         print("Error: This script must be run from within a git repository.")
         sys.exit(1)
-
 
 def get_staged_compose_files(git_root):
     try:
@@ -39,7 +38,6 @@ def get_staged_compose_files(git_root):
         print(f"Error finding staged files: {e.stderr}")
         sys.exit(1)
 
-
 def check_docker_compose_installed():
     is_docker_compose_installed = (
         subprocess.call(
@@ -61,7 +59,6 @@ def check_docker_compose_installed():
         sys.exit(1)
 
     return is_docker_installed  # Prefer 'docker compose' over 'docker-compose'
-
 
 def remove_dependencies_and_env_files(yaml_content):
     try:
@@ -87,47 +84,50 @@ def remove_dependencies_and_env_files(yaml_content):
         print(f"Error parsing YAML: {e}")
         return yaml_content
 
-
 def validate_compose_file(compose_file, use_docker):
     with open(compose_file, "r") as f:
         original_content = f.read()
 
     modified_content = remove_dependencies_and_env_files(original_content)
 
+    with tempfile.NamedTemporaryFile(mode='w', suffix='.yml', delete=False) as temp_file:
+        temp_file.write(modified_content)
+        temp_file_path = temp_file.name
+
     try:
         if use_docker:
-            process = subprocess.Popen(
-                ["docker", "compose", "config"],
-                stdin=subprocess.PIPE,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
+            process = subprocess.run(
+                ["docker", "compose", "-f", temp_file_path, "config"],
+                capture_output=True,
                 text=True,
+                check=True,
                 env={**os.environ, "COMPOSE_IGNORE_ORPHANS": "True"},
             )
         else:
-            process = subprocess.Popen(
-                ["docker-compose", "config"],
-                stdin=subprocess.PIPE,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
+            process = subprocess.run(
+                ["docker-compose", "-f", temp_file_path, "config"],
+                capture_output=True,
                 text=True,
+                check=True,
                 env={**os.environ, "COMPOSE_IGNORE_ORPHANS": "True"},
             )
-
-        stdout, stderr = process.communicate(input=modified_content)
-
+        # check this status 
         if process.returncode != 0:
             print(f"Docker Compose validation failed for {compose_file}")
-            print(stderr)
+            print(process.stderr)
             sys.exit(1)
     except subprocess.CalledProcessError as e:
-        print(f"Error validating {compose_file}: {e.stderr}")
+        print(f"Docker Compose validation failed for {compose_file}")
+        print(e.stderr)
         sys.exit(1)
-
+    finally:
+        os.unlink(temp_file_path)
 
 def main():
     git_root = get_git_root()
     compose_files = get_staged_compose_files(git_root)
+
+    print(compose_files)
 
     if not compose_files:
         print("No Docker Compose files found in staged changes.")
@@ -137,7 +137,6 @@ def main():
 
     for compose_file in compose_files:
         validate_compose_file(compose_file, use_docker)
-
 
 if __name__ == "__main__":
     main()
