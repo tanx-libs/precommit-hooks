@@ -127,8 +127,6 @@ def main():
     git_root = get_git_root()
     compose_files = get_staged_compose_files(git_root)
 
-    print(compose_files)
-
     if not compose_files:
         print("No Docker Compose files found in staged changes.")
         sys.exit(0)
