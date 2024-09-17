@@ -32,7 +32,7 @@ def main():
             results.append(result)
     if len(results) > 0:
         print('\n'.join(results))
-        print('\n to ignore this check, add " # noqa:keycheck" ')
+        print('\n to ignore this check, add " # noqa:keycheck" or to skip check on a file, add " # noqa:keycheck-file" in the beginning of the file  ')
         sys.exit(1)
 
     sys.exit(0)
